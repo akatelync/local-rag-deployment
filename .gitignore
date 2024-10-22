@@ -163,3 +163,5 @@ cython_debug/
 
 senate-legislative/
 right-of-way/
+.DS_Store
+backend/.DS_Store
