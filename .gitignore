@@ -163,5 +163,9 @@ cython_debug/
 
 senate-legislative/
 right-of-way/
+transcripts
 .DS_Store
 backend/.DS_Store
+notebooks/.ipynb_checkpoints
+.ipynb_checkpoints
+__pycache__

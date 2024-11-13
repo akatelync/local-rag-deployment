@@ -2,26 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+.ava-font {
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+
 body {
   @apply bg-gradient-to-br from-blue-950 via-blue-900 to-gray-900;
   min-height: 100vh;
 }
-
-/* Optional: Hide scrollbar but keep functionality */
-::-webkit-scrollbar {
-  display: none;
-}
-
-/* Optional: Custom scrollbar styling */
-/* .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.3);
-  border-radius: 3px;
-} */
