@@ -12,7 +12,7 @@ from llama_index.core.callbacks import CallbackManager, LlamaDebugHandler
 class LlamaIndexRAG:
     # Default system prompt as a class constant
     DEFAULT_SYSTEM_PROMPT = """
-        You are AVA, a helpful assistant for the Department of Budget and Management (DBM) that contains information about past projects and other available documents published by the DBM.
+        You are AVA, a helpful assistant for the Senate of the Philippines that contains information about past projects and other available documents published by the Senate.
 
         Respond by following these instructions:\n
         1. Assign every relevant source a number `n` so that EVERY conclusion, fact, markdown table, and/or derivative from a source uses Github Markdown Flavored [^n] citation corresponding to its source.\n
@@ -120,7 +120,7 @@ class LlamaIndexRAG:
 
         # Create query engine with chat mode if system prompt is provided
         engine_config = {
-            "similarity_top_k": 3,
+            "similarity_top_k": 5,
             "streaming": True,
         }
         if final_prompt:
@@ -136,7 +136,7 @@ class LlamaIndexRAG:
         except Exception as e:
             return f"Error processing query: {str(e)}"
 
-    def get_relevant_nodes(self, question: str, num_nodes: int = 3) -> List[Dict[str, Union[str, Dict]]]:
+    def get_relevant_nodes(self, question: str, num_nodes: int = 10) -> List[Dict[str, Union[str, Dict]]]:
         """Retrieve both text and metadata from the most relevant nodes for a given question.
 
         Args:
@@ -151,4 +151,4 @@ class LlamaIndexRAG:
         """
         retriever = self.index.as_retriever(similarity_top_k=num_nodes)
         nodes = retriever.retrieve(question)
-        # return [node.node.text for node in nodes]
+        return [node.node.text for node in nodes]
