@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Send, Loader2, Menu, Paperclip, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -12,6 +12,14 @@ const ChatInterface = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [attachedFile, setAttachedFile] = useState(null);
   const [fileContent, setFileContent] = useState([]);
+  const textAreaRef = useRef(null);
+
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = 'auto';
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+    }
+  }, [inputValue]);
 
   const systemNames = {
     general: 'Bill Aging Assistant',
@@ -151,8 +159,8 @@ const ChatInterface = () => {
       </div>
 
       <main className="flex-1 flex flex-col">
-        <div className="container mx-auto p-4 max-w-3xl flex flex-col h-full">
-          <div className="flex-1 flex flex-col bg-white/90 backdrop-blur rounded-lg shadow-lg relative overflow-hidden border border-gray-200">
+        <div className="container mx-auto p-4 max-w-full flex flex-col h-full">
+          <div className="flex-1 flex flex-col bg-white rounded-lg shadow-lg relative overflow-hidden border border-gray-200">
             <div className="px-8 py-6 border-b border-gray-200 backdrop-blur-sm bg-white/80">
               <div className="flex items-center gap-6">
                 <button
@@ -233,13 +241,10 @@ const ChatInterface = () => {
               )}
               <form onSubmit={handleSubmit} className="flex gap-2 items-end">
                 <div className="flex-1 flex flex-col gap-2">
-                  <textarea
+                <textarea
+                    ref={textAreaRef}
                     value={inputValue}
-                    onChange={(e) => {
-                      setInputValue(e.target.value);
-                      e.target.style.height = 'auto';
-                      e.target.style.height = `${e.target.scrollHeight}px`;
-                    }}
+                    onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
@@ -247,9 +252,9 @@ const ChatInterface = () => {
                       }
                     }}
                     placeholder="Ask a question..."
-                    className="flex-1 bg-gray-50 text-gray-800 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent placeholder-gray-400 transition-all duration-200 min-h-[40px] max-h-[160px] resize-none overflow-y-auto"
+                    className="flex-1 bg-gray-50 text-gray-800 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent placeholder-gray-400 transition-all duration-200 resize-none overflow-y-hidden"
                     disabled={isLoading}
-                    rows={1}
+                    rows={2}
                   />
                   <div className="flex items-center gap-2">
                     {systemType === 'journal' && (
